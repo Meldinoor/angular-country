@@ -291,13 +291,13 @@ var CountryModule;
                         excludeCountries = attr['excludeCountries'].toString().split(',');
                 }
 				var style = attr['style'] ? attr['style'] : '';
-                var options = '<div style="' + style + '" class="dropdown"><button style="' + style + '" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ctrl.ngModel.$viewValue}}<span class="caret" style="position: absolute; right: 10px; top: 48%;"></span></button>'
+                var options = '<div style="' + style + '" class="dropdown"><button style="' + style + '; text-align: left;" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ctrl.ngModel.$viewValue}}<span class="caret" style="position: absolute; right: 10px; top: 48%;"></span></button>'
                     + '<ul style="' + style + '" class="dropdown-menu currency-selecter-scrollable-menu">';
                 if (preferredCountries.length) {
                     for (var i = 0; i < preferredCountries.length; ++i) {
                         if (Countries[preferredCountries[i].toUpperCase()] !== void 0) {
                             var ucPc = preferredCountries[i].toUpperCase();
-                            options += '<li style="text-align: center;"><a href="" ng-click="ctrl.selectCountry(\'' + Countries[ucPc] + ' (' + ucPc + ')\')" role="button">' + Countries[ucPc] + ' (' + ucPc + ')</a></li>';
+                            options += '<li><a href="" ng-click="ctrl.selectCountry(\'' + Countries[ucPc] + ' (' + ucPc + ')\')" role="button">' + Countries[ucPc] + ' (' + ucPc + ')</a></li>';
                         }
                     }
                     options += '<li role="separator" class="divider"></li>';
@@ -307,7 +307,7 @@ var CountryModule;
                         || excludeCountries.some(function (c, idx, arr) { return c.toUpperCase() === key; })
                         || (includeCountries.length !== 0 && !includeCountries.some(function (c, idx, arr) { return c.toUpperCase() === key; })))
                         continue;
-                    options += '<li style="text-align: center;"><a href="" ng-click="ctrl.selectCountry(\'' + Countries[key] + ' (' + key + ')\')" role="button">' + Countries[key] + ' (' + key + ')</a></li>';
+                    options += '<li><a href="" ng-click="ctrl.selectCountry(\'' + Countries[key] + ' (' + key + ')\')" role="button">' + Countries[key] + ' (' + key + ')</a></li>';
                 }
                 element.append(options);
                 return {
