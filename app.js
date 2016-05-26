@@ -296,7 +296,7 @@ var CountryModule;
                     for (var i = 0; i < preferredCountries.length; ++i) {
                         if (Countries[preferredCountries[i].toUpperCase()] !== void 0) {
                             var ucPc = preferredCountries[i].toUpperCase();
-                            options += '<li><a href="" ng-click="ctrl.selectCountry(\'' + Countries[ucPc] + ' (' + ucPc + ')\')" role="button">' + Countries[ucPc] + ' (' + ucPc + ')</a></li>';
+                            options += '<li style="text-align: center;"><a href="" ng-click="ctrl.selectCountry(\'' + Countries[ucPc] + ' (' + ucPc + ')\')" role="button">' + Countries[ucPc] + ' (' + ucPc + ')</a></li>';
                         }
                     }
                     options += '<li role="separator" class="divider"></li>';
@@ -306,7 +306,7 @@ var CountryModule;
                         || excludeCountries.some(function (c, idx, arr) { return c.toUpperCase() === key; })
                         || (includeCountries.length !== 0 && !includeCountries.some(function (c, idx, arr) { return c.toUpperCase() === key; })))
                         continue;
-                    options += '<li><a href="" ng-click="ctrl.selectCountry(\'' + Countries[key] + ' (' + key + ')\')" role="button">' + Countries[key] + ' (' + key + ')</a></li>';
+                    options += '<li style="text-align: center;"><a href="" ng-click="ctrl.selectCountry(\'' + Countries[key] + ' (' + key + ')\')" role="button">' + Countries[key] + ' (' + key + ')</a></li>';
                 }
                 element.append(options);
                 return {
