@@ -304,7 +304,7 @@ module CountryModule {
 				
 				var style: string = attr['style'] ? attr['style'] : '';
                 var options: string =
-                    '<div style="' + style + '" class="dropdown"><button style="' + style + '" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ctrl.ngModel.$viewValue}}<span class="caret"></span></button>'
+                    '<div style="' + style + '" class="dropdown"><button style="' + style + '" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ctrl.ngModel.$viewValue}}<span class="caret" style="position: absolute; right: 10px; top: 48%;"></span></button>'
                     + '<ul style="' + style + '" class="dropdown-menu currency-selecter-scrollable-menu">';
 
                 if (preferredCountries.length) {
