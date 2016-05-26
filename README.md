@@ -2,7 +2,7 @@
 A simple bootstrap dropdown for selecting from world countries
 
 # Usage
-Make sure to include 'CountrySelector' as a dependency in your angular module.
+Make sure to include 'CountrySelecter' as a dependency in your angular module.
 
 To implement the selecter in your markup, use the following syntax:
 
