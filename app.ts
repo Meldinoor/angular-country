@@ -272,7 +272,7 @@ module CountryModule {
     function CountrySelecterDirective($compile: ng.ICompileService): ng.IDirective {
         return {
             restrict: 'E',
-            require: 'ngModel',
+            require: ['ngModel', '^^?form'],
             bindToController: true,
             controllerAs: 'ctrl',
             controller: CountrySelecterController,
@@ -280,6 +280,7 @@ module CountryModule {
                 var preferredCountries: string[] = [];
                 var includeCountries: string[] = [];
                 var excludeCountries: string[] = [];
+				var dropdownClass = 'dropdown';
 
                 if (attr['preferredCountries']) {
                     if (typeof attr['preferredCountries'] === 'array')
@@ -302,9 +303,14 @@ module CountryModule {
                         excludeCountries = attr['excludeCountries'].toString().split(',');
                 }
 				
+				if(attr['direction']) {
+					if(attr['direction'].toLowerCase() === 'up')
+						dropdownClass = 'dropup';
+				}
+				
 				var style: string = attr['style'] ? attr['style'] : '';
                 var options: string =
-                    '<div style="' + style + '" class="dropdown"><button style="' + style + '; text-align: left; padding-left: 20px;" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ctrl.ngModel.$viewValue}}<span class="caret" style="position: absolute; right: 10px; top: 48%;"></span></button>'
+                    '<div style="' + style + '" class="' + dropdownClass + '"><button style="' + style + '; text-align: left; padding-left: 20px;" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ctrl.ngModel.$viewValue}}<span class="caret" style="position: absolute; right: 10px; top: 48%;"></span></button>'
                     + '<ul style="' + style + '" class="dropdown-menu currency-selecter-scrollable-menu">';
 
                 if (preferredCountries.length) {
@@ -329,7 +335,9 @@ module CountryModule {
                 element.append(options);
 
                 return {
-                    pre: (scope: IScopeWithCountrySelecterController, element: ng.IAugmentedJQuery, attr: ng.IAttributes, ngModel: ng.INgModelController) => {
+                    pre: (scope: IScopeWithCountrySelecterController, element: ng.IAugmentedJQuery, attr: ng.IAttributes, ctrls) => {
+						var ngModel = ctrls[0];
+						var formCtrl = ctrls[1];
                         $compile(element.children())(scope);
                         var defaultCountry = null;
                         
@@ -342,6 +350,10 @@ module CountryModule {
 
                         if (!ngModel.$modelValue && defaultCountry) {
                             ngModel.$setViewValue(Countries[defaultCountry] + ' (' + defaultCountry + ')');
+							
+							ngModel.$setPristine();
+							if(formCtrl)
+								formCtrl.$setPristine();
                         }
 
                         scope.ctrl.ngModel = ngModel;

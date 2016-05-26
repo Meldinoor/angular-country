@@ -263,7 +263,7 @@ var CountryModule;
     function CountrySelecterDirective($compile) {
         return {
             restrict: 'E',
-            require: 'ngModel',
+            require: ['ngModel', '^^?form'],
             bindToController: true,
             controllerAs: 'ctrl',
             controller: CountrySelecterController,
@@ -272,6 +272,7 @@ var CountryModule;
                 var preferredCountries = [];
                 var includeCountries = [];
                 var excludeCountries = [];
+				var dropdownClass = 'dropdown';
                 if (attr['preferredCountries']) {
                     if (typeof attr['preferredCountries'] === 'array')
                         preferredCountries = attr['preferredCountries'];
@@ -290,8 +291,12 @@ var CountryModule;
                     else
                         excludeCountries = attr['excludeCountries'].toString().split(',');
                 }
+				if(attr['direction']) {
+					if(attr['direction'].toLowerCase() === 'up')
+						dropdownClass = 'dropup';
+				}
 				var style = attr['style'] ? attr['style'] : '';
-                var options = '<div style="' + style + '" class="dropdown"><button style="' + style + '; text-align: left; padding-left: 20px;" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ctrl.ngModel.$viewValue}}<span class="caret" style="position: absolute; right: 10px; top: 48%;"></span></button>'
+                var options = '<div style="' + style + '" class="' + dropdownClass + '"><button style="' + style + '; text-align: left; padding-left: 20px;" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ctrl.ngModel.$viewValue}}<span class="caret" style="position: absolute; right: 10px; top: 48%;"></span></button>'
                     + '<ul style="' + style + '" class="dropdown-menu currency-selecter-scrollable-menu">';
                 if (preferredCountries.length) {
                     for (var i = 0; i < preferredCountries.length; ++i) {
@@ -311,8 +316,10 @@ var CountryModule;
                 }
                 element.append(options);
                 return {
-                    pre: function (scope, element, attr, ngModel) {
+                    pre: function (scope, element, attr, ctrls) {
                         $compile(element.children())(scope);
+						var ngModel = ctrls[0];
+						var formCtrl = ctrls[1];
                         var defaultCountry = null;
                         if (attr['defaultCountry']) {
                             defaultCountry = attr['defaultCountry'].toString();
@@ -321,6 +328,9 @@ var CountryModule;
                         ngModel.$parsers.push(function (v) { return v.substr(v.lastIndexOf('(') + 1, 3); });
                         if (!ngModel.$modelValue && defaultCountry) {
                             ngModel.$setViewValue(Countries[defaultCountry] + ' (' + defaultCountry + ')');
+							ngModel.$setPristine();
+							if(formCtrl)
+								formCtrl.$setPristine();
                         }
                         scope.ctrl.ngModel = ngModel;
                     }
