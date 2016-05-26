@@ -301,10 +301,11 @@ module CountryModule {
                     else
                         excludeCountries = attr['excludeCountries'].toString().split(',');
                 }
-
+				
+				var style: string = attr['style'] ? attr['style'] : '';
                 var options: string =
-                    '<div class="dropdown"><button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ctrl.ngModel.$viewValue}}<span class="caret"></span></button>'
-                    + '<ul class="dropdown-menu currency-selecter-scrollable-menu">';
+                    '<div style="' + style + '" class="dropdown"><button style="' + style + '" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{ctrl.ngModel.$viewValue}}<span class="caret"></span></button>'
+                    + '<ul style="' + style + '" class="dropdown-menu currency-selecter-scrollable-menu">';
 
                 if (preferredCountries.length) {
                     for (var i = 0; i < preferredCountries.length; ++i) {
