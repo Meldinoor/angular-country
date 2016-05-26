@@ -260,13 +260,14 @@ var CountryModule;
         CountrySelecterController.$inject = [];
         return CountrySelecterController;
     })();
-    function CountrySelecterDirective() {
+    function CountrySelecterDirective($compile) {
         return {
             restrict: 'E',
             require: 'ngModel',
             bindToController: true,
             controllerAs: 'ctrl',
             controller: CountrySelecterController,
+            scope: [],
             compile: function (element, attr, transclude) {
                 var preferredCountries = [];
                 var includeCountries = [];
@@ -311,6 +312,7 @@ var CountryModule;
                 element.append(options);
                 return {
                     pre: function (scope, element, attr, ngModel) {
+                        $compile(element.children())(scope);
                         var defaultCountry = null;
                         if (attr['defaultCountry']) {
                             defaultCountry = attr['defaultCountry'].toString();
@@ -326,6 +328,6 @@ var CountryModule;
             }
         };
     }
-    angular.module('CountrySelecter', []).directive('countrySelecter', CountrySelecterDirective).constant('countryConfig', {});
+    angular.module('CountrySelecter', []).directive('countrySelecter', ['$compile', CountrySelecterDirective]).constant('countryConfig', {});
 })(CountryModule || (CountryModule = {}));
 //# sourceMappingURL=app.js.map

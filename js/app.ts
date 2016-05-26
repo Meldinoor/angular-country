@@ -269,7 +269,7 @@ module CountryModule {
         }
     }
 
-    function CountrySelecterDirective(): ng.IDirective {
+    function CountrySelecterDirective($compile: ng.ICompileService): ng.IDirective {
         return {
             restrict: 'E',
             require: 'ngModel',
@@ -325,13 +325,14 @@ module CountryModule {
 
                     options += '<li style="text-align: center;"><a href="" ng-click="ctrl.selectCountry(\'' + Countries[key] + ' (' + key + ')\')" role="button">' + Countries[key] + ' (' + key + ')</a></li>';
                 }
-
+                
                 element.append(options);
 
                 return {
                     pre: (scope: IScopeWithCountrySelecterController, element: ng.IAugmentedJQuery, attr: ng.IAttributes, ngModel: ng.INgModelController) => {
+                        $compile(element.children())(scope);
                         var defaultCountry = null;
-
+                        
                         if (attr['defaultCountry']) {
                             defaultCountry = attr['defaultCountry'].toString();
                         }                        
@@ -350,7 +351,7 @@ module CountryModule {
         }
     }
 
-    angular.module('CountrySelecter', []).directive('countrySelecter', CountrySelecterDirective).constant('countryConfig', {
+    angular.module('CountrySelecter', []).directive('countrySelecter', ['$compile', CountrySelecterDirective]).constant('countryConfig', {
 
     });
 }
