@@ -276,7 +276,7 @@ module CountryModule {
             bindToController: true,
             controllerAs: 'ctrl',
             controller: CountrySelecterController,
-			scope: [disabled: '=ngDisabled'],
+			scope: {disabled: '=ngDisabled'},
             compile: function (element: ng.IAugmentedJQuery, attr: ng.IAttributes, transclude: ng.ITranscludeFunction) {
                 var preferredCountries: string[] = [];
                 var includeCountries: string[] = [];

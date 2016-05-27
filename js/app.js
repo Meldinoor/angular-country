@@ -267,7 +267,7 @@ var CountryModule;
             bindToController: true,
             controllerAs: 'ctrl',
             controller: CountrySelecterController,
-            scope: [disabled: '=ngDisabled'],
+            scope: {disabled: '=ngDisabled'},
             compile: function (element, attr, transclude) {
                 var preferredCountries = [];
                 var includeCountries = [];
