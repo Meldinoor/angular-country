@@ -325,7 +325,7 @@ var CountryModule;
                             defaultCountry = attr['defaultCountry'].toString();
                         }
                         ngModel.$formatters.push(function (m) { return Countries[m] + ' (' + m + ')'; });
-                        ngModel.$parsers.push(function (v) { return v.substr(v.lastIndexOf('(') + 1, 3); });
+                        ngModel.$parsers.push(function (v) { return v.substr(v.lastIndexOf('(') + 1, 2); });
                         if (!ngModel.$modelValue && defaultCountry) {
                             ngModel.$setViewValue(Countries[defaultCountry] + ' (' + defaultCountry + ')');
 							ngModel.$setPristine();

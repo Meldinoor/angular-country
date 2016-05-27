@@ -347,7 +347,7 @@ module CountryModule {
                         }                        
 
                         ngModel.$formatters.push(m => Countries[m] + ' (' + m + ')');
-                        ngModel.$parsers.push(v => v.substr(v.lastIndexOf('(') + 1, 3));
+                        ngModel.$parsers.push(v => v.substr(v.lastIndexOf('(') + 1, 2));
 
                         if (!ngModel.$modelValue && defaultCountry) {
                             ngModel.$setViewValue(Countries[defaultCountry] + ' (' + defaultCountry + ')');
